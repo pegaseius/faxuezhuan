@@ -11,8 +11,9 @@
 <title>南大法学院论文引用格式转换器</title>
 <script>
 function convertCitation(inputCitation) {
-    // 使用七个正则表达式匹配论文引用的不同部分
+    // 使用八个正则表达式匹配论文引用的不同部分
     const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)-(\d+)\.$/;
+    const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)\.$/;
     const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\)\.$/;
     const regexzhiwangqikan = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\,(.*?)\((.*?)\)/;
     const regexPublisher = /^(.+?)\.(.+?)\[(.+?)\]\.([^:,]+):([^,]+),(\d{4})\.$/;
@@ -26,6 +27,11 @@ function convertCitation(inputCitation) {
     match = inputCitation.match(regexWithPages);
     if (match) {
         return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}期，第${match[7]}-${match[8]}页。`;
+    }
+
+    match = inputCitation.match(regexWith1Page);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}期，第${match[7]}页。`;
     }
 
     match = inputCitation.match(regexWithoutPages);
