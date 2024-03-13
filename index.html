@@ -2,157 +2,91 @@
 <html lang="zh-CN">
 <head>
 <style>
-        body {
-            background-color: #8470FF;
-        }
-    </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>南大法学院论文引用格式转换器</title>
-    <script>
-        function convertCitation(inputCitation) {
-            // 使用四个正则表达式匹配论文引用的不同部分
-            const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)-(\d+)\.$/;
-            const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\)\.$/;
-            const regexzhiwangqikan = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\,(.*?)\((.*?)\)/;
-            const regexPublisher = /^(.+?)\.(.+?)\[(.+?)\]\.([^:,]+):([^,]+),(\d{4})\.$/;
-            const regexzhiwangbookz = /^(.*?)\[(.*?)\]\.(.*?)(著)\.(.*?)\.(.*)/;
-            const regexzhiwangbookzb = /^(.*?)\[(.*?)\]\.(.*?)(主编)\.(.*?)\.(.*)/;
-            const regexzhiwangbook = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\.(.*)/;
-            
-            // 首先尝试匹配带有页码的格式
-            let match = inputCitation.match(regexWithPages);
-            if (match) {
-                // 提取匹配的各个部分
-                const author = match[1];
-                const title = match[2];
-                const wxlx = match[3];
-                const qikan = match[4];
-                const year = match[5];
-                const issue = match[6];
-                const pages1 = match[7];
-                const pages2 = match[8];
+    body {
+        background-color: #8470FF;
+    }
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南大法学院论文引用格式转换器</title>
+<script>
+function convertCitation(inputCitation) {
+    // 使用七个正则表达式匹配论文引用的不同部分
+    const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)-(\d+)\.$/;
+    const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\)\.$/;
+    const regexzhiwangqikan = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\,(.*?)\((.*?)\)/;
+    const regexPublisher = /^(.+?)\.(.+?)\[(.+?)\]\.([^:,]+):([^,]+),(\d{4})\.$/;
+    const regexzhiwangbookz = /^(.*?)\[(.*?)\]\.(.*?)(著)\.(.*?)\.(.*)/;
+    const regexzhiwangbookzb = /^(.*?)\[(.*?)\]\.(.*?)(主编)\.(.*?)\.(.*)/;
+    const regexzhiwangbook = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\.(.*)/;
 
-                // 构造新的引用格式
-                return `${author}：《${title}》，载《${qikan}》${year}年第${issue}期，第${pages1}-${pages2}页。`;
-            }
-            
-            // 如果带有页码的格式匹配不到，尝试匹配不带页码的格式
-            match = inputCitation.match(regexWithoutPages);
-            if (match) {
-                // 提取匹配的各个部分
-                const author = match[1];
-                const title = match[2];
-                const wxlx = match[3];
-                const qikan = match[4];
-                const year = match[5];
-                const issue = match[6];
+    // 逐个尝试匹配
+    let match;
 
-                // 构造新的引用格式
-                return `${author}：《${title}》，载《${qikan}》${year}年第${issue}期。`;
-            }
+    match = inputCitation.match(regexWithPages);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}期，第${match[7]}-${match[8]}页。`;
+    }
 
-            // 如果带有页码的格式匹配不到，尝试匹配知网不带页码的格式
-            match = inputCitation.match(regexzhiwangqikan);
-            if (match) {
-                // 提取匹配的各个部分
-                const author = match[3];
-                const title = match[1];
-                const wxlx = match[2];
-                const qikan = match[4];
-                const year = match[5];
-                const issue = match[6];
+    match = inputCitation.match(regexWithoutPages);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}期。`;
+    }
 
-                // 构造新的引用格式
-                return `${author}：《${title}》，载《${qikan}》${year}年第${issue}期。`;
-            }
-            
-            // 如果不带页码的格式匹配不到，尝试匹配普通专著格式
-            match = inputCitation.match(regexPublisher);
-            if (match) {
-                // 提取匹配的各个部分
-                const author = match[1];
-                const title = match[2];
-                const wxlx = match[3];
-                const publisher = match[5];
-                const location = match[4];
-                const year = match[6];
+    match = inputCitation.match(regexzhiwangqikan);
+    if (match) {
+        return `${match[3]}：《${match[1]}》，载《${match[4]}》${match[5]}年第${match[6]}期。`;
+    }
 
-                // 构造新的引用格式
-                return `${author}：《${title}》，${publisher}${year}年版。`;
-            }
-            
-            // 如果普通专著格式匹配不到，尝试匹配知网普通专著（含著）格式
-            match = inputCitation.match(regexzhiwangbookz);
-            if (match) {
-                // 提取匹配的各个部分
-                const author = match[3];
-                const title = match[1];
-                const wxlx = match[2];
-                const publisher = match[5];
-                const year = match[6];
+    match = inputCitation.match(regexPublisher);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，${match[4]}：${match[5]}，${match[6]}年版。`;
+    }
 
-                // 构造新的引用格式
-                return `${author}：《${title}》，${publisher}${year}年版。`;
-            }
-                       
-            // 如果知网普通专著（含著）格式匹配不到，尝试匹配知网普通专著（含主编）格式
-            match = inputCitation.match(regexzhiwangbookzb);
-            if (match) {
-                // 提取匹配的各个部分
-                const author = match[3];
-                const title = match[1];
-                const wxlx = match[2];
-                const publisher = match[5];
-                const year = match[6];
+    match = inputCitation.match(regexzhiwangbookz);
+    if (match) {
+        return `${match[3]}：《${match[1]}》，${match[5]}${match[6]}年版。`;
+    }
 
-                // 构造新的引用格式
-                return `${author}：《${title}》，${publisher}${year}年版。`;
-            }
-            
-            // 如果知网普通专著（含主编）格式匹配不到，尝试匹配知网普通专著格式
-            match = inputCitation.match(regexzhiwangbook);
-            if (match) {
-                // 提取匹配的各个部分
-                const author = match[3];
-                const title = match[1];
-                const wxlx = match[2];
-                const publisher = match[4];
-                const year = match[5];
+    match = inputCitation.match(regexzhiwangbookzb);
+    if (match) {
+        return `${match[3]}：《${match[1]}》，${match[5]}${match[6]}年版。`;
+    }
 
-                // 构造新的引用格式
-                return `${author}：《${title}》，${publisher}${year}年版。`;
-            }
-            
-            // 如果都匹配不到，返回错误信息
-            return "无法识别的引用格式";
-        }
+    match = inputCitation.match(regexzhiwangbook);
+    if (match) {
+        return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年版。`;
+    }
 
-        function convertAndDisplay() {
-            const inputCitation = document.getElementById('inputCitation').value;
-            const outputCitation = convertCitation(inputCitation);
-            document.getElementById('outputCitation').textContent = outputCitation;
-        }
-    </script>
+    // 如果都匹配不到，返回错误信息
+    return "无法识别的引用格式";
+}
+
+function convertAndDisplay() {
+    const inputCitation = document.getElementById('inputCitation').value;
+    const outputCitation = convertCitation(inputCitation);
+    document.getElementById('outputCitation').textContent = outputCitation;
+}
+</script>
 </head>
 <body>
-    <div style="text-align:center;"><h1>南京大学法学院论文引用格式转换器</h1></div>
-    <div style="text-align:center;"> <p>将文献转换成《法学引注手册》格式</p></div>
-    <p>一次只能转化一个文献</p>
-    <p>注意标点符号只能是半角英语符号，注意不要有序号如：[1]</p>
-    <p>目前支持四种文献转化格式：</p>
-    <p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学.2023(01).11-12.</p>
-    <p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学.2023(01).</p>
-    <p>3.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
-    <p>4.知网文献节下中文作者的期刊、专著，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
-    <p>输入原始引用：</p>
-    <textarea id="inputCitation" rows="4" cols="50">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.</textarea>
-    <br>
-    <button onclick="convertAndDisplay()">转换</button>
-    <br>
-    <p>转换后的引用：</p>
-    <p id="outputCitation"></p>
-    
-    <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
+<div style="text-align:center;"><h1>南京大学法学院论文引用格式转换器</h1></div>
+<div style="text-align:center;"> <p>将文献转换成《法学引注手册》格式</p></div>
+<p>一次只能转化一个文献</p>
+<p>注意标点符号只能是半角英语符号，注意不要有序号如：[1]</p>
+<p>目前支持四种文献转化格式：</p>
+<p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01):11-12.</p>
+<p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
+<p>3.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
+<p>4.知网文献节下中文作者的期刊、专著，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
+<p>输入原始引用：</p>
+<textarea id="inputCitation" rows="4" cols="50">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.</textarea>
+<br>
+<button onclick="convertAndDisplay()">转换</button>
+<br>
+<p>转换后的引用：</p>
+<p id="outputCitation"></p>
+
+<div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
 </body>
 </html>
