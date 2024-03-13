@@ -3,15 +3,78 @@
 <head>
 <style>
     body {
-        background-color: #8470FF;
+        background: linear-gradient(to bottom, #f5f5f5, #ede3ec); /* 背景渐变色 */;
     }
+    button {
+    background-color: #701e5e; /* 绿色背景 */
+    border: none;
+    color: white; /* 白色文字 */
+    padding: 15px 32px; /* 按钮内边距 */
+    text-align: center;
+    text-decoration: none;
+    display: block; /* 将按钮变成块级元素 */
+    font-size: 18px;
+    margin: 20px auto; /* 上下边距20像素，左右自动居中 */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 20px; /* 圆角 */
+}
+
+button:hover {
+    background-color: #45a049; /* 悬停时的绿色 */
+}
+
+textarea {
+    width: 90%; /* 设置文本区域宽度为父元素的80% */
+    height: 100px; /* 设置文本区域高度为200像素 */
+    padding: 10px; /* 设置内边距 */
+    font-size: 18px; /* 设置字体大小 */
+    border-radius: 10px; /* 设置圆角 */
+    border: 2px solid #701e5e; /* 设置边框 */
+    margin: 0 auto; /* 水平居中 */
+    display: block; /* 将元素变成块级元素 */
+}
+
+textarea:focus {
+    outline: none; /* 移除获取焦点时的默认边框 */
+}
+
+.copy-button {
+    background-color: #701e5e; /* 绿色背景 */
+    border: none;
+    color: white; /* 白色文字 */
+    padding: 15px 32px; /* 按钮内边距 */
+    text-align: center;
+    text-decoration: none;
+    display: block; /* 将按钮变成块级元素 */
+    font-size: 18px;
+    margin: 20px auto; /* 上下边距20像素，左右自动居中 */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 20px; /* 圆角 */
+}
+
+.copy-button:hover {
+    background-color: #45a049; /* 悬停时的绿色 */
+}
+
+.help-content {
+    display: none; /* 默认隐藏帮助内容 */
+    padding: 10px;
+}
+
 </style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>南大法学院论文引用格式转换器</title>
 <script>
+function toggleHelp() {
+    const helpContent = document.getElementById('helpContent');
+    helpContent.style.display = helpContent.style.display === 'none' ? 'block' : 'none'; // 切换显示状态
+}
+
 function convertCitation(inputCitation) {
-    // 使用八个正则表达式匹配论文引用的不同部分
+    // 使用七个正则表达式匹配论文引用的不同部分
     const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)-(\d+)\.$/;
     const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)\.$/;
     const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\)\.$/;
@@ -69,29 +132,52 @@ function convertCitation(inputCitation) {
 }
 
 function convertAndDisplay() {
-    const inputCitation = document.getElementById('inputCitation').value;
-    const outputCitation = convertCitation(inputCitation);
-    document.getElementById('outputCitation').textContent = outputCitation;
+    const inputCitations = document.getElementById('inputCitations').value;
+    const inputCitationArray = inputCitations.split('\n'); // 将输入的文献按行分割成数组
+    let outputCitations = ''; // 初始化输出的引用文本
+
+    // 遍历每个文献，转换并拼接到输出文本中
+    inputCitationArray.forEach(inputCitation => {
+        const outputCitation = convertCitation(inputCitation.trim()); // 转换引用格式，并去除首尾空格
+        outputCitations += outputCitation + '\n'; // 将转换后的引用文本拼接到输出文本中
+    });
+
+    document.getElementById('outputCitations').textContent = outputCitations.trim(); // 将输出文本显示在页面上
+}
+
+function copyToClipboard() {
+    const outputCitations = document.getElementById('outputCitations').textContent;
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = outputCitations;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextArea);
+    alert('已复制到剪贴板');
 }
 </script>
 </head>
 <body>
 <div style="text-align:center;"><h1>南京大学法学院论文引用格式转换器</h1></div>
 <div style="text-align:center;"> <p>将文献转换成《法学引注手册》格式</p></div>
-<p>一次只能转化一个文献</p>
-<p>注意标点符号只能是半角英语符号，注意不要有序号如：[1]</p>
-<p>目前支持四种文献转化格式：</p>
-<p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01):11-12.</p>
-<p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
-<p>3.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
-<p>4.知网文献节下中文作者的期刊、专著，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
-<p>输入原始引用：</p>
-<textarea id="inputCitation" rows="4" cols="50">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.</textarea>
+<button onclick="toggleHelp()">帮助</button>
+<div id="helpContent" class="help-content">
+    <p>注意标点符号只能是半角英语符号，注意不要有序号如：[1]</p>
+    <p>目前支持四种文献转化格式：</p>
+    <p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01):11-12.</p>
+    <p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
+    <p>3.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
+    <p>4.知网文献节下中文作者的期刊、专著，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
+</div>
+<p>输入原始引用（每个文献一行）：</p>
+<textarea id="inputCitations" rows="4" cols="50">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.
+刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</textarea>
 <br>
 <button onclick="convertAndDisplay()">转换</button>
+<button class="copy-button" onclick="copyToClipboard()">复制到剪贴板</button>
 <br>
 <p>转换后的引用：</p>
-<p id="outputCitation"></p>
+<pre id="outputCitations"></pre>
 
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
 </body>
