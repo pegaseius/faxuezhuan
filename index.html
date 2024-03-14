@@ -119,7 +119,7 @@ function convertCitation(inputCitation) {
 
     match = inputCitation.match(regexPublisher);
     if (match) {
-        return `${match[1]}：《${match[2]}》，${match[4]}：${match[5]}，${match[6]}年版。`;
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年版。`;
     }
 
     match = inputCitation.match(regexzhiwangbookz);
