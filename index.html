@@ -89,11 +89,15 @@ function convertCitation(inputCitation) {
     const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)\.$/;
     const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\)\.$/;
     const regexzhiwangqikan = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\,(.*?)\((.*?)\)/;
-    const regexPublisher = /^(.+?)\.(.+?)\[(.+?)\]\.([^:,]+):([^,]+),(\d{4})\.$/;
+    const regexPublisher = /^(.+?)\.(.+?)\[M\]\.([^:,]+):([^,]+),(\d{4})\.$/;
     const regexPublisherwithpages = /^(.+?)\.(.+?)\[M\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
+    const regexPublisherwith1page = /^(.+?)\.(.+?)\[(M)\]\.(.+?):(.+?),(\d+):(\d+)\.$/;
     const regexzhiwangbookz = /^(.*?)\[(.*?)\]\.(.*?)(著)\.(.*?)\.(.*)/;
     const regexzhiwangbookzb = /^(.*?)\[(.*?)\]\.(.*?)(主编)\.(.*?)\.(.*)/;
     const regexzhiwangbook = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\.(.*)/;
+    const regexDegree = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+)\.$/;
+    const regexDegreewithpages = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
+    const regexDegreewith1page = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)\.$/;
     const regexzhiwangdegree = /^(.+?)\[(\w)\]\.\s*(.+?)\.(.+?),(\d+)$/;
 
     // 逐个尝试匹配
@@ -121,12 +125,17 @@ function convertCitation(inputCitation) {
 
     match = inputCitation.match(regexPublisher);
     if (match) {
-        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年版。`;
+        return `${match[1]}：《${match[2]}》，${match[4]}${match[5]}年版。`;
     }
     
     match = inputCitation.match(regexPublisherwithpages);
     if (match) {
         return `${match[1]}：《${match[2]}》，${match[4]}${match[5]}年版，第${match[6]}-${match[7]}页。`;
+    }
+
+    match = inputCitation.match(regexPublisherwith1page);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年版，第${match[7]}页。`;
     }
 
     match = inputCitation.match(regexzhiwangbookz);
@@ -144,6 +153,21 @@ function convertCitation(inputCitation) {
         return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年版。`;
     }
 
+    match = inputCitation.match(regexDegree);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文。`;
+    }
+    
+    match = inputCitation.match(regexDegreewithpages);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}-${match[8]}页。`;
+    }
+    
+    match = inputCitation.match(regexDegreewith1page);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}页。`;
+    }
+    
     match = inputCitation.match(regexzhiwangdegree);
     if (match) {
         return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年博士论文。`;
@@ -190,8 +214,11 @@ function copyToClipboard() {
     <p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
     <p>3.带页码的专著类文献，如：王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.</p>
     <p>4.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
-    <p>5.知网文献节下中文作者的期刊、专著，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
-    <p>6.知网文献节下中文博士（仅限博士！）论文，如：专门环境诉讼研究[D]. 蔡学恩.武汉大学,2015</p>
+    <p>5.带页码的中文博士（仅限博士！）论文，如：丁麟茜.对宗教的社会历史批判——马克思宗教批判思想研究[D].长春:吉林大学,2023:17-19.</p>
+    <p>6.不带页码的中文博士（仅限博士！）论文，如：马欢.人类活动影响下海河流域典型区水循环变化分析[D].北京:北京大学,2011.</p>
+    <p>7.知网文献节下中文作者的期刊，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
+    <p>8.知网文献节下中文作者的专著，如：劳动与社会保障法学[M].《劳动与社会保障法学》编写组.高等教育出版社.2018</p>
+    <p>9.知网文献节下中文博士（仅限博士！）论文，如：专门环境诉讼研究[D]. 蔡学恩.武汉大学,2015</p>
 </div>
 <p>输入原始引用（每个文献一行）：</p>
 <textarea id="inputCitations" rows="4" cols="50">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.
