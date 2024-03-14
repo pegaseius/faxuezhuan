@@ -82,6 +82,9 @@ function toggleHelp() {
     }
 }
 
+function openReferenceTool() {
+        window.open('https://pegaseius.github.io/lawschoolreferencetest/', '_blank');// 跳转一键排序
+    }
 
 function convertCitation(inputCitation) {
     // 使用十个正则表达式匹配论文引用的不同部分
@@ -230,7 +233,7 @@ function copyToClipboard() {
 <br>
 <p>转换后的引用：</p>
 <pre id="outputCitations"></pre>
-
+<button onclick="openReferenceTool()">一键编号/排序工具</button>
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
 </body>
