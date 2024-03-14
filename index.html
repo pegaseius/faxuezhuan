@@ -7,18 +7,23 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="main.js" defer></script>
     <script defer>
-
+        
         const currentTimeStamp = Date.now();
+        
         const startTimeStamp = new Date('2024-03-14T17:00:00').getTime();
+
         const timeDifference = currentTimeStamp - startTimeStamp;
-        const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
-        const adetime = 10075;
-        const olpitime = adetime + timeDifferenceInSeconds;
+
+        const timeDifferenceInMinutes = Math.floor(timeDifference / (1000 * 60));
+
+        const visitorsPerTenMinutes = Math.floor(timeDifferenceInMinutes / 10);
+
+        const currentVisitorCount = 10075 + visitorsPerTenMinutes;
 
         document.addEventListener("DOMContentLoaded", function() {
             const visitorCountElement = document.getElementById("visitorCount");
             if (visitorCountElement) {
-                visitorCountElement.textContent = "累计访客人数：" + olpitime + " 人";
+                visitorCountElement.textContent = "当前访客人数：" + currentVisitorCount + " 人";
             }
         });
     </script>
@@ -54,5 +59,6 @@
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
 <div style="text-align:center;"><p id="visitorCount"></p></div>
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
+<div style="text-align:center;"><p>2024年3月13日</p></div>
 </body>
 </html>
