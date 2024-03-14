@@ -1,0 +1,60 @@
+body {
+    background: linear-gradient(to bottom, #f5f5f5, #ede3ec); /* 背景渐变色 */;
+}
+button {
+    background-color: #701e5e; /* 绿色背景 */
+    border: none;
+    color: white; /* 白色文字 */
+    padding: 15px 32px; /* 按钮内边距 */
+    text-align: center;
+    text-decoration: none;
+    display: block; /* 将按钮变成块级元素 */
+    font-size: 18px;
+    margin: 20px auto; /* 上下边距20像素，左右自动居中 */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 20px; /* 圆角 */
+}
+
+button:hover {
+    background-color: #45a049; /* 悬停时的绿色 */
+}
+
+textarea {
+    width: 90%; /* 设置文本区域宽度为父元素的80% */
+    height: 100px; /* 设置文本区域高度为200像素 */
+    padding: 10px; /* 设置内边距 */
+    font-size: 18px; /* 设置字体大小 */
+    border-radius: 10px; /* 设置圆角 */
+    border: 2px solid #701e5e; /* 设置边框 */
+    margin: 0 auto; /* 水平居中 */
+    display: block; /* 将元素变成块级元素 */
+}
+
+textarea:focus {
+    outline: none; /* 移除获取焦点时的默认边框 */
+}
+
+.copy-button {
+    background-color: #701e5e; /* 绿色背景 */
+    border: none;
+    color: white; /* 白色文字 */
+    padding: 15px 32px; /* 按钮内边距 */
+    text-align: center;
+    text-decoration: none;
+    display: block; /* 将按钮变成块级元素 */
+    font-size: 18px;
+    margin: 20px auto; /* 上下边距20像素，左右自动居中 */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 20px; /* 圆角 */
+}
+
+.copy-button:hover {
+    background-color: #45a049; /* 悬停时的绿色 */
+}
+
+.help-content {
+    display: none; /* 默认隐藏帮助内容 */
+    padding: 10px;
+}
