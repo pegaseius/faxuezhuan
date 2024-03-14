@@ -8,22 +8,22 @@
     <script src="main.js" defer></script>
     <script defer>
         
-        const currenthito = Date.now();
+        const currentTimeStamp = Date.now();
         
-        const starthito = new Date('2024-03-14T17:00:00').getTime();
+        const startTimeStamp = new Date('2024-03-14T17:00:00').getTime();
 
-        const timehito = currenthito - starthito;
+        const timeDifference = currentTimeStamp - startTimeStamp;
 
-        const timehitoInMinutes = Math.floor(timehito / (1000 * 60));
+        const timeDifferenceInMinutes = Math.floor(timeDifference / (1000 * 60));
 
-        const visitorshito = Math.floor(timehitoInMinutes / 10);
+        const visitorsPerTenMinutes = Math.floor(timeDifferenceInMinutes / 10);
 
-        const currenthito = 10075 + hito;
+        const currentVisitorCount = 10075 + visitorsPerTenMinutes;
 
         document.addEventListener("DOMContentLoaded", function() {
             const visitorCountElement = document.getElementById("visitorCount");
             if (visitorCountElement) {
-                visitorCountElement.textContent = "累计访客人数：" + currenthito + " 人";
+                visitorCountElement.textContent = "当前访客人数：" + currentVisitorCount + " 人";
             }
         });
     </script>
@@ -59,6 +59,5 @@
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
 <div style="text-align:center;"><p id="visitorCount"></p></div>
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
-<div style="text-align:center;"><p>2024.3.13 All rights reserved</p></div>
 </body>
 </html>
