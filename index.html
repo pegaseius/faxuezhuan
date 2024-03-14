@@ -84,15 +84,17 @@ function toggleHelp() {
 
 
 function convertCitation(inputCitation) {
-    // 使用八个正则表达式匹配论文引用的不同部分
+    // 使用十个正则表达式匹配论文引用的不同部分
     const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)-(\d+)\.$/;
     const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)\.$/;
     const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\)\.$/;
     const regexzhiwangqikan = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\,(.*?)\((.*?)\)/;
     const regexPublisher = /^(.+?)\.(.+?)\[(.+?)\]\.([^:,]+):([^,]+),(\d{4})\.$/;
+    const regexPublisherwithpages = /^(.+?)\.(.+?)\[M\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
     const regexzhiwangbookz = /^(.*?)\[(.*?)\]\.(.*?)(著)\.(.*?)\.(.*)/;
     const regexzhiwangbookzb = /^(.*?)\[(.*?)\]\.(.*?)(主编)\.(.*?)\.(.*)/;
     const regexzhiwangbook = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\.(.*)/;
+    const regexzhiwangdegree = /^(.+?)\[(\w)\]\.\s*(.+?)\.(.+?),(\d+)$/;
 
     // 逐个尝试匹配
     let match;
@@ -121,6 +123,11 @@ function convertCitation(inputCitation) {
     if (match) {
         return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年版。`;
     }
+    
+    match = inputCitation.match(regexPublisherwithpages);
+    if (match) {
+        return `${match[1]}：《${match[2]}》，${match[4]}${match[5]}年版，第${match[6]}-${match[7]}页。`;
+    }
 
     match = inputCitation.match(regexzhiwangbookz);
     if (match) {
@@ -135,6 +142,11 @@ function convertCitation(inputCitation) {
     match = inputCitation.match(regexzhiwangbook);
     if (match) {
         return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年版。`;
+    }
+
+    match = inputCitation.match(regexzhiwangdegree);
+    if (match) {
+        return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年博士论文。`;
     }
 
     // 如果都匹配不到，返回错误信息
@@ -173,15 +185,18 @@ function copyToClipboard() {
 <button onclick="toggleHelp()">帮助</button>
 <div id="helpContent" class="help-content">
     <p>注意标点符号只能是半角英语符号，注意不要有序号如：[1]</p>
-    <p>目前支持四种文献转化格式：</p>
+    <p>目前支持多种文献转化格式：</p>
     <p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01):11-12.</p>
     <p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
-    <p>3.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
-    <p>4.知网文献节下中文作者的期刊、专著，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
+    <p>3.带页码的专著类文献，如：王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.</p>
+    <p>4.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
+    <p>5.知网文献节下中文作者的期刊、专著，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
+    <p>6.知网文献节下中文博士（仅限博士！）论文，如：专门环境诉讼研究[D]. 蔡学恩.武汉大学,2015</p>
 </div>
 <p>输入原始引用（每个文献一行）：</p>
 <textarea id="inputCitations" rows="4" cols="50">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.
-刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</textarea>
+刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).
+王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.</textarea>
 <br>
 <button onclick="convertAndDisplay()">转换</button>
 <button class="copy-button" onclick="copyToClipboard()">一键复制</button>
