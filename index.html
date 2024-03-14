@@ -26,7 +26,17 @@
                 visitorCountElement.textContent = "累计访客人数：" + currentVisitorCount + " 人";
             }
         });
+
+        function openNormalizationTool() {
+            window.open("https://pegaseius.github.io/quxuhao/", "_blank");
+        }
     </script>
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
 <div style="text-align:center;"><h1>南京大学法学院论文引用格式转换器</h1></div>
@@ -35,6 +45,7 @@
 <div id="helpContent" class="help-content">
     <p>小红书号：3895712578  中单兔法师</p>
     <p>注意标点符号只能是半角英语符号，注意不要有序号如：[1]</p>
+    <p>建议先点击页尾“输入文本规范化工具”按钮将输入文本规范化</p>
     <p>目前支持多种文献转化格式：</p>
     <p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01):11-12.</p>
     <p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
@@ -54,12 +65,17 @@
 刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).
 王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.</textarea>
 <br>
-<button onclick="convertAndDisplay()">转换</button>
-<button class="copy-button" onclick="copyToClipboard()">一键复制</button>
+<div class="button-container">
+    <button onclick="convertAndDisplay()">转换</button>
+    <button class="copy-button" onclick="copyToClipboard()">一键复制</button>
+</div>
 <br>
 <p>转换后的引用：</p>
 <pre id="outputCitations"></pre>
-<button onclick="openReferenceTool()">一键编号/排序工具</button>
+<div class="button-container">
+    <button onclick="openReferenceTool()">一键编号/排序工具</button>
+    <button onclick="openNormalizationTool()">输入文本规范化工具</button>
+</div>
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
 <div style="text-align:center;"><p id="visitorCount"></p></div>
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
