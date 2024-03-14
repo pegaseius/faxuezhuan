@@ -8,15 +8,15 @@
     <script src="main.js" defer></script>
     <script defer>
         
-        const currentTimeStamp = Date.now();
+        const currenthito = Date.now();
         
-        const startTimeStamp = new Date('2024-03-14T17:00:00').getTime();
+        const starthito = new Date('2024-03-14T17:00:00').getTime();
 
-        const timeDifference = currentTimeStamp - startTimeStamp;
+        const hitoDifference = currenthito - starthito;
 
-        const timeDifferenceInMinutes = Math.floor(timeDifference / (1000 * 60));
+        const hitoDifferenceInMinutes = Math.floor(hitoDifference / (1000 * 60));
 
-        const visitorsPerTenMinutes = Math.floor(timeDifferenceInMinutes / 10);
+        const visitorsPerTenMinutes = Math.floor(hitoDifferenceInMinutes / 10);
 
         const currentVisitorCount = 10075 + visitorsPerTenMinutes;
 
