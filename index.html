@@ -8,22 +8,22 @@
     <script src="main.js" defer></script>
     <script defer>
         
-        const currentTimeStamp = Date.now();
+        const currenthito = Date.now();
         
-        const startTimeStamp = new Date('2024-03-14T17:00:00').getTime();
+        const starthito = new Date('2024-03-14T17:00:00').getTime();
 
-        const timeDifference = currentTimeStamp - startTimeStamp;
+        const timehito = currenthito - starthito;
 
-        const timeDifferenceInMinutes = Math.floor(timeDifference / (1000 * 60));
+        const timehitoInMinutes = Math.floor(timehito / (1000 * 60));
 
-        const visitorsPerTenMinutes = Math.floor(timeDifferenceInMinutes / 10);
+        const visitorshito = Math.floor(timehitoInMinutes / 10);
 
-        const currentVisitorCount = 10075 + visitorsPerTenMinutes;
+        const currenthito = 10075 + hito;
 
         document.addEventListener("DOMContentLoaded", function() {
             const visitorCountElement = document.getElementById("visitorCount");
             if (visitorCountElement) {
-                visitorCountElement.textContent = "累计访客人数：" + currentVisitorCount + " 人";
+                visitorCountElement.textContent = "累计访客人数：" + currenthito + " 人";
             }
         });
     </script>
