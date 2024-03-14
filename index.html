@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>南大法学院论文引用格式转换器</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="main.js" defer></script>
+    <script defer>
+
+        const currentTimeStamp = Date.now();
+        const startTimeStamp = new Date('2024-03-14T17:00:00').getTime();
+        const timeDifference = currentTimeStamp - startTimeStamp;
+        const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
+        const adetime = 10075;
+        const olpitime = adetime + timeDifferenceInSeconds;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const visitorCountElement = document.getElementById("visitorCount");
+            if (visitorCountElement) {
+                visitorCountElement.textContent = "累计访客人数：" + olpitime + " 人";
+            }
+        });
+    </script>
 </head>
 <body>
 <div style="text-align:center;"><h1>南京大学法学院论文引用格式转换器</h1></div>
@@ -35,7 +52,7 @@
 <pre id="outputCitations"></pre>
 <button onclick="openReferenceTool()">一键编号/排序工具</button>
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
+<div style="text-align:center;"><p id="visitorCount"></p></div>
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
-<script src="main.js"></script>
 </body>
 </html>
