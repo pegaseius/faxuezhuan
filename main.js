@@ -16,10 +16,13 @@ function openReferenceTool() {
 }
 
 function convertCitation(inputCitation) {
-    // 使用十个正则表达式匹配论文引用的不同部分
+    // 正则表达式
     const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\):(\d+)-(\d+)\.$/;
     const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\):(\d+)\.$/;
     const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\)\.$/;
+    const regexWithPagesandv = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4}),(\d{1,2})\((\d{1,2})\):(\d+)-(\d+)\.$/;
+    const regexWith1Pageandv = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4}),(\d{1,2})\((\d{1,2})\):(\d+)\.$/;
+    const regexWithoutPagesandv = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4}),(\d{1,2})\((\d{1,2})\)\.$/;
     const regexzhiwangqikan = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\,(.*?)\((.*?)\)/;
     const regexPublisher = /^(.+?)\.(.+?)\[M\]\.([^:,]+):([^,]+),(\d{4})\.$/;
     const regexPublisherwithpages = /^(.+?)\.(.+?)\[M\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
@@ -53,6 +56,27 @@ function convertCitation(inputCitation) {
         return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期。`;
     }
 
+        match = inputCitation.match(regexWithPagesandv);
+    if (match) {
+        const volume = parseInt(match[6], 10); // 转换卷号为整数以去除前导零
+        const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${volume}卷第${period}期，第${match[8]}-${match[9]}页。`;
+    }
+
+    match = inputCitation.match(regexWith1Pageandv);
+    if (match) {
+        const volume = parseInt(match[6], 10); // 转换卷号为整数以去除前导零
+        const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${volume}卷第${period}期，第${match[8]}页。`;
+    }
+
+    match = inputCitation.match(regexWithoutPagesandv);
+    if (match) {
+        const volume = parseInt(match[6], 10); // 转换卷号为整数以去除前导零
+        const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${volume}卷第${period}期。`;
+    }
+    
     match = inputCitation.match(regexzhiwangqikan);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
