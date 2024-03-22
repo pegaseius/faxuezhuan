@@ -17,9 +17,9 @@ function openReferenceTool() {
 
 function convertCitation(inputCitation) {
     // 使用十个正则表达式匹配论文引用的不同部分
-    const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)-(\d+)\.$/;
-    const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\):(\d+)\.$/;
-    const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{2})\)\.$/;
+    const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\):(\d+)-(\d+)\.$/;
+    const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\):(\d+)\.$/;
+    const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\)\.$/;
     const regexzhiwangqikan = /^(.*?)\[(.*?)\]\.(.*?)\.(.*?)\,(.*?)\((.*?)\)/;
     const regexPublisher = /^(.+?)\.(.+?)\[M\]\.([^:,]+):([^,]+),(\d{4})\.$/;
     const regexPublisherwithpages = /^(.+?)\.(.+?)\[M\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
