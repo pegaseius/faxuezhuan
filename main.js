@@ -120,12 +120,12 @@ function convertCitation(inputCitation) {
 
     match = inputCitation.match(regexDegreewithpages);
     if (match) {
-        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}-${match[8]}页。`;
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文，第${match[7]}-${match[8]}页。`;
     }
 
     match = inputCitation.match(regexDegreewith1page);
     if (match) {
-        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}页。`;
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文，第${match[7]}页。`;
     }
 
     match = inputCitation.match(regexzhiwangdegree);
