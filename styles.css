@@ -1,60 +1,278 @@
-body {
-    background: linear-gradient(to bottom, #f5f5f5, #ede3ec); /* 背景渐变色 */;
+:root {
+    --purple: #701e5e;
+    --purple-soft: #8a5a80;
+    --green: #45a049;
 }
-button {
-    background-color: #701e5e; /* 绿色背景 */
-    border: none;
-    color: white; /* 白色文字 */
-    padding: 15px 32px; /* 按钮内边距 */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to bottom, #f5f5f5, #ede3ec);
+    color: #222;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px 16px 40px;
+}
+
+.page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+h1 {
     text-align: center;
-    text-decoration: none;
-    display: block; /* 将按钮变成块级元素 */
-    font-size: 18px;
-    margin: 20px auto; /* 上下边距20像素，左右自动居中 */
+    font-size: 28px;
+    margin: 0 0 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555;
+    margin: 0 0 18px;
+}
+
+button {
+    background-color: var(--purple);
+    border: none;
+    color: #fff;
+    padding: 14px 30px;
+    text-align: center;
+    display: block;
+    font-size: 17px;
+    margin: 20px auto;
     transition-duration: 0.4s;
     cursor: pointer;
-    border-radius: 20px; /* 圆角 */
+    border-radius: 20px;
 }
 
 button:hover {
-    background-color: #45a049; /* 悬停时的绿色 */
+    background-color: var(--green);
+}
+
+button.secondary {
+    background-color: var(--purple-soft);
+}
+
+button.secondary:hover {
+    background-color: var(--green);
 }
 
 textarea {
-    width: 90%; /* 设置文本区域宽度为父元素的80% */
-    height: 100px; /* 设置文本区域高度为200像素 */
-    padding: 10px; /* 设置内边距 */
-    font-size: 18px; /* 设置字体大小 */
-    border-radius: 10px; /* 设置圆角 */
-    border: 2px solid #701e5e; /* 设置边框 */
-    margin: 0 auto; /* 水平居中 */
-    display: block; /* 将元素变成块级元素 */
+    width: 100%;
+    min-height: 230px;
+    padding: 10px;
+    font-size: 17px;
+    line-height: 1.6;
+    border-radius: 10px;
+    border: 2px solid var(--purple);
+    display: block;
+    resize: vertical;
+    font-family: inherit;
 }
 
 textarea:focus {
-    outline: none; /* 移除获取焦点时的默认边框 */
+    outline: none;
 }
 
-.copy-button {
-    background-color: #701e5e; /* 绿色背景 */
-    border: none;
-    color: white; /* 白色文字 */
-    padding: 15px 32px; /* 按钮内边距 */
-    text-align: center;
-    text-decoration: none;
-    display: block; /* 将按钮变成块级元素 */
-    font-size: 18px;
-    margin: 20px auto; /* 上下边距20像素，左右自动居中 */
-    transition-duration: 0.4s;
-    cursor: pointer;
-    border-radius: 20px; /* 圆角 */
+label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 600;
 }
 
-.copy-button:hover {
-    background-color: #45a049; /* 悬停时的绿色 */
+select {
+    padding: 8px 10px;
+    font-size: 16px;
+    border: 2px solid var(--purple);
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font-family: inherit;
+}
+
+.settings {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid #e0d4dd;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 18px 0;
+}
+
+.setting-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.setting-row label {
+    margin: 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+    margin: 10px 0 0;
+}
+
+.checkbox-label input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--purple);
+}
+
+.hint {
+    font-size: 13px;
+    color: #666;
+    margin: 10px 0 0;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.button-row button {
+    margin: 8px 0;
+}
+
+.output-header {
+    margin: 18px 0 8px;
+    font-size: 16px;
+}
+
+.copy-status {
+    color: var(--green);
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.output {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 14px 18px;
+    min-height: 64px;
+}
+
+.output p {
+    margin: 0 0 10px;
+    line-height: 1.8;
+    font-size: 17px;
+    word-wrap: break-word;
+}
+
+.output p:last-child {
+    margin-bottom: 0;
+}
+
+.output .placeholder {
+    color: #888;
+    font-size: 15px;
+}
+
+.diagnostics {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #cfc3cb;
+    font-size: 14px;
+    color: #555;
+}
+
+.diagnostics p {
+    margin: 0 0 6px;
+}
+
+.diagnostics ul {
+    margin: 6px 0 0 20px;
+    padding: 0;
+}
+
+.diagnostics li {
+    margin: 3px 0;
 }
 
 .help-content {
-    display: none; /* 默认隐藏帮助内容 */
-    padding: 10px;
+    display: none;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid #e0d4dd;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.help-content.show {
+    display: block;
+}
+
+.help-content h3 {
+    font-size: 15px;
+    margin: 14px 0 6px;
+}
+
+.help-content p {
+    margin: 6px 0;
+}
+
+.help-content ul {
+    margin: 6px 0 6px 20px;
+    padding: 0;
+}
+
+.help-content li {
+    margin: 4px 0;
+}
+
+code {
+    background: #f2ebf0;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 0.92em;
+    word-break: break-word;
+}
+
+footer {
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+    margin-top: 28px;
+}
+
+footer p {
+    margin: 4px 0;
+}
+
+.visitor-counter img {
+    height: 70px;
+    vertical-align: middle;
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 18px 12px 32px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    .button-row button {
+        width: 100%;
+    }
+
+    .setting-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }

@@ -6,81 +6,110 @@
     <title>南大法学院论文引用格式转换器</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="main.js" defer></script>
-    <script defer>
-        
-        const currenthito = Date.now();
-        
-        const starthito = new Date('2024-03-14T17:00:00').getTime();
-
-        const hitoDifference = currenthito - starthito;
-
-        const hitoDifferenceInMinutes = Math.floor(hitoDifference / (1000 * 60));
-
-        const visitorsPerTenMinutes = Math.floor(hitoDifferenceInMinutes / 10);
-
-        const currentVisitorCount = 10075 + visitorsPerTenMinutes;
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const visitorCountElement = document.getElementById("visitorCount");
-            if (visitorCountElement) {
-                visitorCountElement.textContent = "累计访客人数：" + currentVisitorCount + " 人";
-            }
-        });
-
-        function openNormalizationTool() {
-            window.open("https://pegaseius.github.io/quxuhao/", "_blank");
-        }
-        
-        function openEndNoteTool() {
-            window.open('https://pegaseius.github.io/gb/', '_blank'); // 打开 gb 转法学引注工具
-        }
-        
-    </script>
-    <style>
-        .button-container {
-            display: flex;
-            justify-content: center;
-        }
-    </style>
 </head>
 <body>
-<div style="text-align:center;"><h1>南京大学法学院论文引用格式转换器</h1></div>
-<div style="text-align:center;"> <p>将文献转换成《法学引注手册》格式</p></div>
-<button onclick="toggleHelp()">帮助</button>
-<div id="helpContent" class="help-content">
-    <p>小红书号：3895712578  中单兔法师</p>
-    <p>注意标点符号只能是半角英语符号，注意不要有序号如：[1]</p>
-    <p>建议先点击页尾“输入文本规范化工具”按钮将输入文本规范化</p>
-    <p>目前支持多种文献转化格式：</p>
-    <p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01):11-12.</p>
-    <p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
-    <p>3.带页码的专著类文献，如：王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.</p>
-    <p>4.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
-    <p>5.带页码的中文博士（仅限博士！）论文，如：丁麟茜.对宗教的社会历史批判——马克思宗教批判思想研究[D].长春:吉林大学,2023:17-19.</p>
-    <p>6.不带页码的中文博士（仅限博士！）论文，如：马欢.人类活动影响下海河流域典型区水循环变化分析[D].北京:北京大学,2011.</p>
-    <p>7.知网文献节下中文作者的期刊，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
-    <p>8.知网文献节下中文作者的专著，如：劳动与社会保障法学[M].《劳动与社会保障法学》编写组.高等教育出版社.2018</p>
-    <p>9.知网文献节下中文博士（仅限博士！）论文，如：专门环境诉讼研究[D]. 蔡学恩.武汉大学,2015</p>
-</div>
-<p>输入原始引用（每个文献一行）：</p>
-<textarea id="inputCitations" rows="4" cols="50">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.
-刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).
-王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.</textarea>
-<br>
-<div class="button-container">
-    <button onclick="convertAndDisplay()">转换</button>
-    <button class="copy-button" onclick="copyToClipboard()">一键复制</button>
-</div>
-<br>
-<p>转换后的引用：</p>
-<pre id="outputCitations"></pre>
-<div class="button-container">
-    <button onclick="openReferenceTool()">一键编号/排序工具</button>
-    <button onclick="openNormalizationTool()">输入文本规范化工具</button>
-    <button onclick="openEndNoteTool()">（新功能）法学引注手册转国标</button>
-</div>
-<div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
-<div style="text-align:center;"><p id="visitorCount"></p></div>
-<div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
+<main class="page">
+    <h1>南京大学法学院论文引用格式转换器</h1>
+    <p class="subtitle">将文献转换成《法学引注手册》格式（V2.0）</p>
+
+    <button type="button" id="helpButton">帮助</button>
+
+    <div id="helpContent" class="help-content">
+        <p>小红书号：3895712578  中单兔法师</p>
+        <p>注意标点符号只能是半角英语符号；行首序号（如 [1]）会自动去除。</p>
+        <p>建议先点击页尾“输入文本规范化工具”按钮将输入文本规范化</p>
+        <p>目前支持多种文献转化格式：</p>
+        <p>1.带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01):11-12.</p>
+        <p>2.不带页码的期刊类文献，如：刘颖.物权期待权排除强制执行规则之再审思[J].当代法学,2023(01).</p>
+        <p>3.带卷期的期刊类文献，如：梁上上.未出资股东对公司债权人的补充赔偿责任[J].中外法学,2015,27(3):649-664.</p>
+        <p>4.年份后多一个逗号的期刊类文献，如：李建伟.认缴制下股东出资责任加速到期研究[J].人民司法,2015,(9):50-56.</p>
+        <p>5.带页码的专著类文献，如：王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.</p>
+        <p>6.不带页码的专著类文献，如：郑浩峻.足式机器人生物控制方法与应用[M].北京:清华大学出版社,2011.</p>
+        <p>7.带译者的专著类文献，如：托马斯·莱塞尔,吕迪格·法伊尔.德国资合公司法: 第6版[M].高旭军译.上海人民出版社: 2019:17-19.</p>
+        <p>8.无出版地、以“出版社: 年份”标注的专著，如：王军.公司资本制度[M].北京大学出版社: 2022.</p>
+        <p>9.带页码的中文博士（仅限博士！）论文，如：丁麟茜.对宗教的社会历史批判——马克思宗教批判思想研究[D].长春:吉林大学,2023:17-19.</p>
+        <p>10.无出版地的中文博士（仅限博士！）论文，如：王仁荣.跨国公司跨境并购法律问题研究[D].复旦大学,2012:17.</p>
+        <p>11.不带页码的中文博士（仅限博士！）论文，如：陈武清.对赌协议的实践运用与法律风险防范研究[D].华东政法大学,2008.</p>
+        <p>12.带版次的报纸类文献，如：刘俊海.新《公司法》的制度创新[N].法制日报,2005-11-01(009).</p>
+        <p>13.多作者的报纸类文献，如：冀素芳,王升洲.一人公司股东“侵财”何种情形构成犯罪[N].检察日报,2020-09-02(003).</p>
+        <p>14.无作者的报纸类文献（题名在前），如：最高人民法院关于适用《中华人民共和国公司法》若干问题的解释(征求意见稿)[N].人民法院报,2025-10-01(002).</p>
+        <p>15.知网文献节下中文作者的期刊，如：后果考察与刑法目的解释[J].姜涛.政法论坛,2014(04)</p>
+        <p>16.知网文献节下中文作者的专著，如：劳动与社会保障法学[M].《劳动与社会保障法学》编写组.高等教育出版社.2018</p>
+        <p>17.知网文献节下中文博士（仅限博士！）论文，如：专门环境诉讼研究[D]. 蔡学恩.武汉大学,2015</p>
+        <p>报纸类文献的出版信息一般注明年、月、日；必要时注明版次，输出为“第2版”。</p>
+
+        <h3>西文文献（新增）</h3>
+        <p>支持 <code>[J]</code> 期刊、<code>[M]</code> 专著、<code>[C]//</code> 或 <code>[M]//</code> 析出文献、<code>[D]</code> 学位论文、<code>[N]</code> 报纸、<code>[EB/OL]</code> 网络文献、<code>[R]</code> 报告。</p>
+        <ul>
+            <li><strong>作者</strong>：按 GB 的“姓在前、名缩写在后”解析，输出时名在前、姓在后；两人用 <code>&amp;</code>，三人用逗号加 <code>&amp;</code>，四人以上默认全部列出（可取消勾选改用 <code>et al.</code>）。全大写姓氏（如 <code>ZHANG Li</code>）保持姓在前，不做倒置。</li>
+            <li><strong>文章/书名</strong>：实词首字母大写，冠词、介词、连词小写；斜体；不加引号；冒号后空一格。</li>
+            <li><strong>刊物名</strong>：用全称、不缩写、不斜体。常见缩写会自动展开；未收录的缩写会给出提示。</li>
+            <li><strong>期刊</strong>：格式一为“卷 刊名 首页 (年)”；格式二为“刊名, Vol.卷:期, p.起-止 (年)”。两种格式均为手册允许，可在上方切换。</li>
+            <li><strong>书籍</strong>：出版社、年份，不写出版地；页码一律用 <code>p.</code>，不用 <code>pp.</code>。</li>
+        </ul>
+
+        <h3>西文示例</h3>
+        <p>输入：<code>Rachev T S . Taylor's law beyond finite moments: A route to dynamic financial risk.[J].Proceedings of the National Academy of Sciences of the United States of America,2026,123(42):23.</code></p>
+        <p>格式一：<code>T. S. Rachev, Taylor's Law beyond Finite Moments: A Route to Dynamic Financial Risk, 123 Proceedings of the National Academy of Sciences of the United States of America 23 (2026).</code></p>
+        <p>格式二：<code>T. S. Rachev, Taylor's Law beyond Finite Moments: A Route to Dynamic Financial Risk, Proceedings of the National Academy of Sciences of the United States of America, Vol.123:42, p.23 (2026).</code></p>
+        <p>输入：<code>Truby J .AI and the Future of Anti-Corruption Law:Global Governance and Emerging Risks[M].Taylor &amp; Francis.</code></p>
+        <p>输出：<code>J. Truby, AI and the Future of Anti-Corruption Law: Global Governance and Emerging Risks, Taylor & Francis.</code>（出版年缺失时会在下方提示，不会伪造年份。）</p>
+
+        <p>提示：GB 数据通常只有论文的起止页码，没有 pinpoint 页码。格式一只保留首页；需要保留起止页码请选格式二，或在输出中手动补写引用页码。</p>
+    </div>
+
+    <section class="settings" aria-label="西文转换设置">
+        <div class="setting-row">
+            <label for="westernJournalStyle">西文期刊格式</label>
+            <select id="westernJournalStyle">
+                <option value="A" selected>格式一：卷 刊名 首页 (年)</option>
+                <option value="B">格式二：刊名, Vol.卷:期, p.起-止 (年)</option>
+            </select>
+        </div>
+        <label class="checkbox-label">
+            <input type="checkbox" id="listAllAuthors" checked>
+            四人以上合著全部列出（不勾选则用 et al.）
+        </label>
+        <p class="hint" id="styleHint">格式一按手册基本式只保留卷号、刊名与首页，省略期号和起止页码；需保留请选格式二。</p>
+    </section>
+
+    <label for="inputCitations">输入原始引用（每个文献一行）：</label>
+    <textarea id="inputCitations" rows="11" spellcheck="false">罗亚文.不动产物权期待权实体法外溢的反思与厘正——基于31份二手房“先卖后抵”判决书之整理[J].法治研究,2023(03):148-160.
+王泽鉴.英美法导论[M].北京:北京大学出版社,2011:99-100.
+刘俊海.新《公司法》的制度创新[N].法制日报,2005-11-01(009).
+Rachev T S . Taylor's law beyond finite moments: A route to dynamic financial risk.[J].Proceedings of the National Academy of Sciences of the United States of America,2026,123(42):23.
+Li P ,Zhang X ,Shi Z . The generalized strong law of large numbers for Markov chains indexed by a Cayley tree in Markovian environment[J].Communications in Statistics - Theory and Methods,2026,55(23):8205-8223.
+Truby J .AI and the Future of Anti-Corruption Law:Global Governance and Emerging Risks[M].Taylor &amp; Francis.
+Mahasneh N . From possession to control: rethinking ownership of digital assets in light of the UNIDROIT principles (2023)[J].Journal of International Trade Law and Policy,2026,25(3):246-258.</textarea>
+
+    <div class="button-row">
+        <button type="button" id="convertButton">转换</button>
+        <button type="button" id="copyButton">一键复制</button>
+        <button type="button" id="copyPlainButton" class="secondary">复制纯文本</button>
+    </div>
+
+    <div class="output-header">
+        <span>转换后的引用：</span>
+        <span id="copyStatus" class="copy-status" role="status" aria-live="polite"></span>
+    </div>
+    <div id="outputCitations" class="output" aria-live="polite">
+        <p class="placeholder">输入引注后点击“转换”。</p>
+    </div>
+    <div id="diagnostics" class="diagnostics" role="status" aria-live="polite" style="display:none;"></div>
+
+    <div class="button-row">
+        <button type="button" id="referenceToolButton">一键编号/排序工具</button>
+        <button type="button" id="normalizationToolButton">输入文本规范化工具</button>
+        <button type="button" id="endNoteToolButton">法学引注手册转国标</button>
+    </div>
+
+    <footer>
+        <p>南京大学法学院 Chollima 制作</p>
+        <p>累计访问人数</p>
+        <p class="visitor-counter"><img src="https://count.getloli.com/get/@lawschoolreferencetest" alt="累计访问人数"></p>
+        <p>版权所有 禁止用于营利目的</p>
+        <p>2022-2026©</p>
+    </footer>
+</main>
 </body>
 </html>
